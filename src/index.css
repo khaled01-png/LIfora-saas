@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-sans: 'Manrope', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-bengali: 'Noto Sans Bengali', 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    /* Primary Healthcare Red (Strategic for CTAs, blood group indicators, urgent triage) */
+    --color-primary: #DC2626;
+    --color-primary-hover: #B91C1C;
+    --color-primary-active: #991B1B;
+    --color-primary-subtle: #FEF2F2;
+    --color-primary-border: #FEE2E2;
+
+    /* Neutrals (Clean, modern health-tech SaaS) */
+    --color-bg: #F8FAFC;
+    --color-card: #FFFFFF;
+    --color-card-border: #E2E8F0;
+    --color-card-muted: #F1F5F9;
+    --color-text-main: #0F172A;
+    --color-text-secondary: #475569;
+    --color-text-muted: #64748B;
+    
+    /* Semantic Status Indicators */
+    --color-success: #10B981;
+    --color-success-subtle: #ECFDF5;
+    --color-warning: #F59E0B;
+    --color-warning-subtle: #FFFBEB;
+    --color-info: #2563EB;
+    --color-info-subtle: #EFF6FF;
+  }
+
+  .dark {
+    /* Dark Theme Tokens: Deep, focused, medical precision */
+    --color-primary: #EF4444;
+    --color-primary-hover: #DC2626;
+    --color-primary-active: #B91C1C;
+    --color-primary-subtle: #2A1417;
+    --color-primary-border: #4A1E23;
+
+    --color-bg: #0B0F17;
+    --color-card: #111827;
+    --color-card-border: #1E293B;
+    --color-card-muted: #1E293B;
+    --color-text-main: #F8FAFC;
+    --color-text-secondary: #CBD5E1;
+    --color-text-muted: #94A3B8;
+
+    --color-success: #10B981;
+    --color-success-subtle: #06231C;
+    --color-warning: #F59E0B;
+    --color-warning-subtle: #2B1D04;
+    --color-info: #3B82F6;
+    --color-info-subtle: #0D2137;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    letter-spacing: -0.011em;
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Bengali Typography support */
+  .lang-bn,
+  .lang-bn *,
+  .lang-bn body,
+  .lang-bn button,
+  .lang-bn input,
+  .lang-bn select,
+  .lang-bn textarea {
+    font-family: var(--font-bengali) !important;
+    letter-spacing: 0;
+  }
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: #E2E8F0;
+  }
+
+  .dark *,
+  .dark ::after,
+  .dark ::before,
+  .dark ::backdrop,
+  .dark ::file-selector-button {
+    border-color: #1E293B;
+  }
+}
+
+/* Fluid responsive typography utilities */
+.heading-hero {
+  font-size: clamp(1.75rem, 4vw + 0.5rem, 3.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+.heading-page {
+  font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.25rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  font-weight: 800;
+}
+
+.heading-section {
+  font-size: clamp(1.25rem, 1.8vw + 0.4rem, 1.75rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+/* Subtle, calm critical urgency indicator */
+@keyframes critical-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.08);
+  }
+}
+
+.animate-critical-pulse {
+  animation: critical-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Card subtle elevated hover effect */
+.lifora-card {
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 180ms ease, border-color 180ms ease;
+  border-radius: 14px;
+}
+.lifora-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Button arrow micro-interaction */
+.lifora-btn-arrow {
+  transition: transform 160ms ease;
+}
+button:hover .lifora-btn-arrow,
+a:hover .lifora-btn-arrow {
+  transform: translateX(3px);
+}
+
+/* Touch-optimized minimum height for mobile inputs and buttons */
+.touch-target {
+  min-height: 44px;
+}
+
+/* ---- Performance: big soft glows without the GPU-heavy blur filter ----
+   The decorative "blob" circles used blur(100-150px) on 400-650px boxes, which is very slow on phones.
+   A radial mask gives the same soft edge at a fraction of the cost. */
+.absolute.rounded-full[class*="blur-["],
+.absolute.rounded-full.blur-3xl {
+  filter: none !important;
+  -webkit-mask-image: radial-gradient(closest-side, #000 25%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 25%, transparent 100%);
+}
+
+/* Visitors who ask for less motion get no endless animations. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

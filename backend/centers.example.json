@@ -1,0 +1,15 @@
+[
+  {
+    "name": "REPLACE ME - real blood center name",
+    "category": "Hospital Blood Bank",
+    "address": "REPLACE ME - street address",
+    "city": "Sylhet",
+    "phone": "REPLACE ME - a number you have called and confirmed",
+    "emergencyPhone": "",
+    "email": "",
+    "openHours": "Call to confirm",
+    "emergency24x7": false,
+    "bloodGroupsAvailable": [],
+    "services": []
+  }
+]

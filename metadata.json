@@ -1,0 +1,6 @@
+{
+  "name": "LIFORA",
+  "description": "Give Blood. Save Lives. A premium, responsive blood donation and blood management platform.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

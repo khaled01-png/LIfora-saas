@@ -1,0 +1,18 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# local databases & secrets
+*.db
+*.db-shm
+*.db-wal
+.data/
+__pycache__/
+.pytest_cache/
+venv/
+.venv/

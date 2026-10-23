@@ -1,0 +1,69 @@
+[
+  {
+    "name": "Sylhet MAG Osmani Medical College Hospital",
+    "category": "Hospital Blood Bank",
+    "address": "Medical Road, Kajolshah",
+    "city": "Sylhet",
+    "phone": "01335233256",
+    "emergencyPhone": "",
+    "email": "magomch@hospi.dghs.gov.bd",
+    "openHours": "Call to confirm",
+    "emergency24x7": false,
+    "bloodGroupsAvailable": [],
+    "services": [],
+    "lat": 24.9005,
+    "lng": 91.8532
+  },
+  {
+    "name": "Mount Adora Hospital",
+    "category": "Hospital Blood Bank",
+    "address": "Akhalia, Sylhet-Sunamganj Road",
+    "city": "Sylhet",
+    "phone": "09687225566",
+    "emergencyPhone": "",
+    "email": "",
+    "openHours": "Call to confirm",
+    "emergency24x7": false,
+    "bloodGroupsAvailable": [],
+    "services": []
+  },
+  {
+    "name": "Jalalabad Ragib-Rabeya Medical College Hospital",
+    "category": "Hospital Blood Bank",
+    "address": "Ragib-Rabeya Medical College Road, Pathantula",
+    "city": "Sylhet",
+    "phone": "01779900016",
+    "emergencyPhone": "",
+    "email": "",
+    "openHours": "Call to confirm",
+    "emergency24x7": false,
+    "bloodGroupsAvailable": [],
+    "services": []
+  },
+  {
+    "name": "Parkview Medical College Hospital",
+    "category": "Hospital Blood Bank",
+    "address": "VIP Road, Taltala",
+    "city": "Sylhet",
+    "phone": "01849868959",
+    "emergencyPhone": "",
+    "email": "",
+    "openHours": "Call to confirm",
+    "emergency24x7": false,
+    "bloodGroupsAvailable": [],
+    "services": []
+  },
+  {
+    "name": "Sylhet Mujib Jahan Red Crescent Blood Center",
+    "category": "Humanitarian Blood Bank",
+    "address": "Chowhatta",
+    "city": "Sylhet",
+    "phone": "01811458524",
+    "emergencyPhone": "",
+    "email": "",
+    "openHours": "Call to confirm",
+    "emergency24x7": false,
+    "bloodGroupsAvailable": [],
+    "services": []
+  }
+]

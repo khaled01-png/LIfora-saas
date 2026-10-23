@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LIFORA — Give Blood. Save Lives.</title>
+    <meta name="description" content="Give Blood. Save Lives. A premium, responsive blood donation and blood management platform." />
+    <meta property="og:title" content="LIFORA — Give Blood. Save Lives." />
+    <meta property="og:description" content="Give Blood. Save Lives. A premium, responsive blood donation and blood management platform." />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0D7A5F" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script>
+      (function() {
+        try {
+          var savedTheme = localStorage.getItem('lifora-theme');
+          var isDark = savedTheme ? savedTheme === 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.colorScheme = 'light';
+          }
+
+          var savedLang = localStorage.getItem('lifora-lang');
+          if (savedLang === 'bn') {
+            document.documentElement.lang = 'bn';
+            document.documentElement.classList.add('lang-bn');
+          } else {
+            document.documentElement.lang = 'en';
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="font-sans antialiased selection:bg-[#0D7A5F] selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
