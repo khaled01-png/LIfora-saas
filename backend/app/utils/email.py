@@ -1,66 +1,74 @@
+
+import json
 import logging
-import smtplib
-import ssl
-from email.message import EmailMessage
+import os
+from email.utils import parseaddr
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 
 from backend.app.config import settings
 
 log = logging.getLogger("lifora.email")
 
+BREVO_API_URL = "https://api.brevo.com/v3/smtp/email"
+
 
 def email_configured() -> bool:
-    return bool(settings.SMTP_HOST)
+    return bool(
+        os.getenv("BREVO_API_KEY", "").strip()
+        and settings.SMTP_FROM.strip()
+    )
 
 
 def send_email(to: str, subject: str, body: str) -> bool:
-    """Send a plain-text email. Returns False (and sends nothing) when SMTP is not configured."""
     if not email_configured():
-        if not settings.IS_PRODUCTION:
-            log.warning("SMTP not configured. Email to %s not sent. Subject: %s\n%s", to, subject, body)
+        log.error("Email not configured: BREVO_API_KEY or SMTP_FROM missing")
         return False
-    msg = EmailMessage()
-    msg["From"] = settings.SMTP_FROM
-    msg["To"] = to
-    msg["Subject"] = subject
-    msg.set_content(body)
+
+    sender_name, sender_email = parseaddr(settings.SMTP_FROM)
+    if not sender_email or "@" not in sender_email:
+        log.error("SMTP_FROM must contain a valid sender email")
+        return False
+
+    payload = {
+        "sender": {
+            "name": sender_name or "LIFORA",
+            "email": sender_email,
+        },
+        "to": [{"email": to}],
+        "subject": subject,
+        "textContent": body,
+    }
+
+    request = Request(
+        BREVO_API_URL,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={
+            "accept": "application/json",
+            "api-key": os.environ["BREVO_API_KEY"].strip(),
+            "content-type": "application/json",
+        },
+        method="POST",
+    )
+
     try:
-        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=10) as smtp:
-            smtp.starttls(context=ssl.create_default_context())
-            if settings.SMTP_USER:
-                smtp.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
-            smtp.send_message(msg)
-        return True
+        with urlopen(request, timeout=20) as response:
+            log.info("Brevo API accepted email; status=%s", response.status)
+            return 200 <= response.status < 300
+    except HTTPError as exc:
+        details = exc.read().decode("utf-8", errors="replace")[:1000]
+        log.error("Brevo API error: status=%s response=%s", exc.code, details)
+    except (URLError, TimeoutError, OSError) as exc:
+        log.error("Brevo API connection failed: %s", exc)
     except Exception:
-        log.exception("Failed to send email")
-        return False
+        log.exception("Unexpected error sending email through Brevo")
+
+    return False
 
 
 def send_many(messages) -> int:
-    """Send several plain-text e-mails over ONE SMTP connection. `messages` is a list of (to, subject, body).
-    Returns how many were sent. One bad address never stops the others."""
-    if not messages:
-        return 0
-    if not email_configured():
-        if not settings.IS_PRODUCTION:
-            log.warning("SMTP not configured. %d notification e-mail(s) not sent.", len(messages))
-        return 0
     sent = 0
-    try:
-        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=15) as smtp:
-            smtp.starttls(context=ssl.create_default_context())
-            if settings.SMTP_USER:
-                smtp.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
-            for to, subject, body in messages:
-                msg = EmailMessage()
-                msg["From"] = settings.SMTP_FROM
-                msg["To"] = to
-                msg["Subject"] = subject
-                msg.set_content(body)
-                try:
-                    smtp.send_message(msg)
-                    sent += 1
-                except Exception:
-                    log.exception("Could not send one notification e-mail")
-    except Exception:
-        log.exception("Could not open the SMTP connection for notification e-mails")
+    for to, subject, body in messages:
+        if send_email(to, subject, body):
+            sent += 1
     return sent
