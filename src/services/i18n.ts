@@ -4,7 +4,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
   en: {
     // Brand & Meta
     'app.name': 'LIFORA',
-    'app.tagline': 'Give Blood. Save Lives.',
+    'app.tagline':  'Just for Sylhet',
     'app.subtagline': 'A community-first blood donation network linking voluntary donors with nearby patients and hospital transfusion centers.',
     'app.motto': 'Compassion in Action',
     'app.verifiedNetwork': 'Voluntary Blood Donor Network',
@@ -613,7 +613,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
   bn: {
     // Brand & Meta
     'app.name': 'লাইফোরা',
-    'app.tagline': 'রক্ত দিন, জীবন বাঁচান।',
+    'app.tagline': 'শুধু সিলেটের জন্য',
     'app.subtagline': 'স্বেচ্ছাসেবী রক্তদাতা, মুমূর্ষু রোগী এবং হাসপাতাল রক্ত সঞ্চালন কেন্দ্রের মধ্যে সরাসরি সংযোগ স্থাপনকারী মানবিক প্ল্যাটফর্ম।',
     'app.motto': 'মানবিকতার সেবায়',
     'app.verifiedNetwork': 'স্বেচ্ছাসেবী রক্তদাতা নেটওয়ার্ক',
